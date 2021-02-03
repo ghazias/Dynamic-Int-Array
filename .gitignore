@@ -1,0 +1,4 @@
+*.o
+test_main
+a.out
+catch.hpp
