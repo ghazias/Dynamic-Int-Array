@@ -2,6 +2,9 @@ all: test_main example
 
 example: int_array.o example.o
 	g++ -Wall -Wextra -pedantic -g -std=c++17 example.o int_array.o -o example
+	
+growable: int_array.o growable_example.o
+	g++ -Wall -Wextra -pedantic -g -std=c++17 int_array.o growable_example.o -o growable_example
 
 test_main: test_array.o test_main.o int_array.o
 	g++ -Wall -Wextra -pedantic -g -std=c++17 test_array.o test_main.o int_array.o -o test_main
@@ -17,6 +20,6 @@ test_main.o: test_main.cpp
 
 int_array.o: int_array.cpp
 	g++ -c -Wall -Wextra -pedantic -g -std=c++17 int_array.cpp
-
+	
 clean:
 	rm -f *.o test_main example
