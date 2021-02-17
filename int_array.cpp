@@ -1,14 +1,14 @@
 #include "int_array.h"
 
-dsc::IntArray::IntArray(std::size_t size) : array_{new int[size]{}}, size_{size} {}
+dsc::IntArray::IntArray(std::size_t size) : array_{new int[size]{}}, size_{size}, capacity_{size}{}
 
 dsc::IntArray::~IntArray() {
     delete [] array_;
     }
 
-dsc::IntArray::IntArray(const IntArray& original) : array_{new int[original.size()]{}}, size_{original.size()} {
+dsc::IntArray::IntArray(const IntArray& original) : array_{new int[original.capacity()]{}}, size_{original.size()}, capacity_{original.capacity()} {
     for (std::size_t i = 0; i < size(); ++i) {
-        array_[i] = original.array_[i];
+        array_[i] = original[i];
     }
 }
 
@@ -30,7 +30,7 @@ bool dsc::IntArray::operator==(const dsc::IntArray& other) const {
 }
 
 int& dsc::IntArray::operator[](std::size_t i) {
-    return array_[i];
+	return array_[i];
 }
 
 const int& dsc::IntArray::operator[](std::size_t i) const {
@@ -42,14 +42,53 @@ dsc::IntArray& dsc::IntArray::operator=(const dsc::IntArray& other) {
         return *this;
     }
 
-    size_ = other.size_;
+    size_ = other.size();
+    capacity_ = other.capacity();
 
     delete [] array_;
-    array_ = new int[size_]{};
+    array_ = new int[capacity()]{};
 
     for (std::size_t i = 0; i < size(); ++i) {
         (*this)[i] = other[i];
     }
 
     return *this;
+}
+
+void dsc::IntArray::reserve(std::size_t n) {
+	int* resized_array = new int[size() + n];
+	for(std::size_t i = 0; i < size(); ++i) {
+		resized_array[i] = array_[i];
+	}
+	
+	delete [] array_;
+	array_ = resized_array;
+}
+
+int dsc::IntArray::pop_back() {
+    int result = (*this)[size() - 1];
+    (*this)[size() - 1] = 0;
+    size_--;
+    
+    return result;
+}
+
+void dsc::IntArray::push_back(int value) {
+	if (size() < capacity()) {
+		(*this)[size()] = value;
+		size_++;
+	} else {
+		reserve(capacity());
+		(*this)[size() + 1] = value;
+		size_++;
+	}
+}
+
+void dsc::IntArray::insert(int value, std::size_t index) {
+	if (size() == capacity()) { reserve(capacity()); }
+	for(std::size_t i = size() - 1; i > index; --i) {
+		(*this)[i] = (*this)[i - 1];
+	}
+	size_++;
+	(*this)[index] = value;
 }

@@ -15,15 +15,16 @@ class IntArray {
         bool operator==(const dsc::IntArray& other) const;
         IntArray& operator=(const dsc::IntArray& other);
         std::size_t size() const {return size_;}
-        // void reserve(std::size_t new_capacity)
-        // int capacity()
-        // int pop_back
-        // void push_back(int)
-        // void insert(std::size_t index, int value)
-        // 
+        std::size_t capacity() const {return capacity_;};
+        
+        void reserve(std::size_t n); // increases array capacity by n
+        int pop_back(); // removes and returns last value in array
+        void push_back(int value); // adds value at rear of array
+        void insert(int value, std::size_t index); // adds value at index
     private:
-        int* array_;
-        std::size_t size_;
+        int* array_; // pointer to data
+        std::size_t size_; // actual elements
+        std::size_t capacity_; // total elements
     };
 } // namespace dsc
 
