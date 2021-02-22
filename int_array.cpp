@@ -1,5 +1,9 @@
 #include "int_array.h"
 
+constexpr std::size_t DEFAULTCAP = 2;
+
+dsc::IntArray::IntArray() : array_{new int[DEFAULTCAP]{}}, size_{0}, capacity_{DEFAULTCAP}{}
+
 dsc::IntArray::IntArray(std::size_t size) : array_{new int[size]{}}, size_{size}, capacity_{size}{}
 
 dsc::IntArray::~IntArray() {
@@ -56,7 +60,11 @@ dsc::IntArray& dsc::IntArray::operator=(const dsc::IntArray& other) {
 }
 
 void dsc::IntArray::reserve(std::size_t n) {
-	int* resized_array = new int[size() + n];
+	if (n <= capacity_) {
+		return;
+	}
+	capacity_ = n;
+	int* resized_array = new int[capacity_];
 	for(std::size_t i = 0; i < size(); ++i) {
 		resized_array[i] = array_[i];
 	}
@@ -75,13 +83,10 @@ int dsc::IntArray::pop_back() {
 
 void dsc::IntArray::push_back(int value) {
 	if (size() < capacity()) {
+		reserve(capacity());
+	}
 		(*this)[size()] = value;
 		size_++;
-	} else {
-		reserve(capacity());
-		(*this)[size() + 1] = value;
-		size_++;
-	}
 }
 
 void dsc::IntArray::insert(int value, std::size_t index) {

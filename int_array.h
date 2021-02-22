@@ -6,6 +6,7 @@
 namespace dsc {
 class IntArray {
     public:
+    	IntArray();
         IntArray(std::size_t size);
         ~IntArray();
         IntArray(const IntArray& original);
