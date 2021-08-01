@@ -17,7 +17,15 @@ class IntArray {
         IntArray& operator=(const dsc::IntArray& other);
         std::size_t size() const {return size_;}
         std::size_t capacity() const {return capacity_;};
+        int& at(std::size_t index);
+        int& front();
+        int& back();
+        int* data() {return array_;}
         
+        int* begin(); // begin - pointer to first element
+        int* end(); // end - pointer to last element + 1
+        const int* begin() const; // begin - pointer to first element
+        const int* end() const; // end - pointer to last element + 1
         void reserve(std::size_t n); // increases array capacity by n
         int pop_back(); // removes and returns last value in array
         void push_back(int value); // adds value at rear of array

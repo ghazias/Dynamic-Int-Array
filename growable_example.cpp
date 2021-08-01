@@ -10,13 +10,10 @@ namespace {
 	
 	void reserve_test() {
 		dsc::IntArray array(12);
-		std::cout << "reserve() test\n";
-		std::cout << "Initial cap = " << array.capacity() << "\n";
 		assert(array.capacity() == 12);
 		
-		array.reserve(4);
+		array.reserve(16);
 		assert(array.capacity() == 16);
-		std::cout << "New cap = " << array.capacity();
 	}
 	
 	void pop_back_test() {
@@ -72,9 +69,24 @@ namespace {
 		assert(array[1] == 73);
 		assert(array.size() == 4);
 	}
+	
+	void foe_reach_test() {
+		dsc::IntArray array(3);
+		assert(array.size() == 3);
+		
+		array[0] = 18;
+		array[1] = 954;
+		array[2] = 1;
+		
+		
+		for(auto p : array) {
+			std::cout << array[p] << '\n';
+		}
+	}
 } // namespace
 
 int main() {
-	create_array_test();
-	reserve_test();
+	//create_array_test();
+	//reserve_test();
+	foe_reach_test();
 }

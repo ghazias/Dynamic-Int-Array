@@ -1,4 +1,5 @@
 #include "int_array.h"
+#include <stdexcept>
 
 constexpr std::size_t DEFAULTCAP = 2;
 
@@ -57,6 +58,39 @@ dsc::IntArray& dsc::IntArray::operator=(const dsc::IntArray& other) {
     }
 
     return *this;
+}
+
+int& dsc::IntArray::at(std::size_t index) {
+	if (index > size()) { // should I check if it's in bounds or out?
+		throw std::out_of_range ("index out of array bounds");
+	} else {
+		return array_[index];
+	}
+}
+
+int& dsc::IntArray::front() {
+	return array_[0];
+}
+
+int& dsc::IntArray::back() {
+	return array_[size() - 1];
+}
+
+int* dsc::IntArray::begin() {
+	return array_;
+}
+
+int* dsc::IntArray::end() {
+	return array_ + size() + 1;
+}
+
+
+const int* dsc::IntArray::begin() const {
+	return array_;
+}
+
+const int* dsc::IntArray::end() const {
+	return array_ + size();
 }
 
 void dsc::IntArray::reserve(std::size_t n) {

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "int_array.h"
 
+
 // rather than using "static" on a free function for static linkage,
 // in c++, put your top-level but "private" functions in the anonymous
 // namespace. That's just a namespace with no name.
